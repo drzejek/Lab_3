@@ -1,4 +1,8 @@
-By uruchomic program naleÅ¼y na terminalu napisac:
-"Python3.4 Main.py"
+Gra w kó¿ko i krzy¿yk
 
-Nie dzia³a gra typu Gracz-Komputer
+# Lab_3
+[![Build Status](https://travis-ci.org/drzejek/Lab_3.svg?branch=master)](https://travis-ci.org/drzejek/Lab_3)
+
+# Run
+```shell
+$ python3.4 Main.py

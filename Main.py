@@ -1,15 +1,15 @@
 #!/usr/bin/env python3.4
-import sys
 
-from getPosition import getPosition
-from CrossAndCircle import CrossAndCircle
-from InputAndOutput import *
-
-
+from CrossAndCirclePlayerPlayer import *
+from CrossAndCircleComputerPlayer import *
+from InputAndOutputMethods import *
    
 def main():
-    datas = InputAndOutput.inputDatas()
-    gameCrossAndCicle = CrossAndCircle(datas)
+    datas = inputDatas()
+    if datas.getPlayers() == PlayersType.PlayersToPlayers:
+        gameCrossAndCicle = CrossAndCirclePlayerPlayer(datas)
+    else:
+        gameCrossAndCicle = CrossAndCircleComputerPlayer(datas)
 
     print("Please type your position (a-" + chr(ord('a') + gameCrossAndCicle.getLevel() - 1) + ")(0-"
           + str(gameCrossAndCicle.getLevel() - 1) + "). For example a2, b1")
@@ -18,8 +18,8 @@ def main():
         gameCrossAndCicle.move('X')
         gameCrossAndCicle.move('O')
  
-        InputAndOutput.saveToFileGameDatas(datas, gameCrossAndCicle.getList2DState())
-
+        saveToFileGameDatas(datas, gameCrossAndCicle.getList2DState())
+        print("Game datas has been saved")
 if __name__ == '__main__':
     main()
 
