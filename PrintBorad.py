@@ -1,7 +1,5 @@
 #!/usr/bin/env python3.4
 
-from math import *
-
 class PrintBoard:
 
     @classmethod
@@ -9,46 +7,51 @@ class PrintBoard:
         self.listCrossAndCircle = listCrossAndCircle
         self.rows = len(listCrossAndCircle)
 
-        self.printXPosition()
+        pass
+
+
+    def getStringBoard(self, listCrossAndCircle):
+        stringBoard = self.printXPosition()
 
         position = 0
         yPosition = 0
-        for x in listCrossAndCircle:
-            print(yPosition, end='')
+        for x in self.listCrossAndCircle:
+            stringBoard += str(yPosition)
             yPosition +=1
             for element in x:
                 position += 1
-                print(' ' + element + ' ', end='')
-                if PrintBoard.doBreakLine(position):
-                    PrintBoard.printHorizontalSeparator(position)
+                stringBoard += " " + str(element) + " "
+                if self.doBreakLine(position):
+                    stringBoard += self.printHorizontalSeparator(position)
                 else:
-                    PrintBoard.printVerticalSeparator()
-        print()
+                    stringBoard += self.printVerticalSeparator()
+        stringBoard += "\n"
+        return stringBoard
 
-    @classmethod
     def printHorizontalSeparator(self, position):
+        strHorizon = ""
         if position%self.rows==0:
-            print()
-            print(' ', end='')
-            [print('--- ', end='') for ix in range(self.rows)]
-            print()
+            strHorizon += "\n"
+            strHorizon += " "
+            for ix in range(self.rows):
+                strHorizon += "--- "
+            strHorizon += "\n"
         else:
-            print()
+            strHorizon += "\n"
+        return strHorizon
 
-    @classmethod
     def printVerticalSeparator(self):
-        print('|', end='')
+        return "|"
 
-    @classmethod
     def doBreakLine(self, position):
         if position%self.rows==0:
             return True
         else:
             return False
 
-    @classmethod
     def printXPosition(self):
-        print(' ', end='')
+        strXPos = " "
         for number in range(self.rows):
-            print(' ' + chr(ord('a') + number) + ' ', end=' ')
-        print()
+            strXPos += ' ' + chr(ord('a') + number) + '  '
+        strXPos += "\n"
+        return strXPos

@@ -1,25 +1,25 @@
 #!/usr/bin/env python3.4
 
-from CrossAndCirclePlayerPlayer import *
 from CrossAndCircleComputerPlayer import *
-from InputAndOutputMethods import *
-   
+from CrossAndCirclePlayerServer import *
+from InputMethods import *
+from OutputMethods import *
+from PlayersType import *
+
 def main():
     datas = inputDatas()
-    if datas.getPlayers() == PlayersType.PlayersToPlayers:
-        gameCrossAndCicle = CrossAndCirclePlayerPlayer(datas)
+    if datas.getPlayers() == 'PlayerToPlayer':
+        gameCrossAndCicle = CrossAndCirclePlayerServer(datas)
     else:
         gameCrossAndCicle = CrossAndCircleComputerPlayer(datas)
 
-    print("Please type your position (a-" + chr(ord('a') + gameCrossAndCicle.getLevel() - 1) + ")(0-"
-          + str(gameCrossAndCicle.getLevel() - 1) + "). For example a2, b1")
-
+    gameCrossAndCicle.infoMessage()
+    gameCrossAndCicle.printBoard()
     while True:
         gameCrossAndCicle.move('X')
         gameCrossAndCicle.move('O')
- 
+
         saveToFileGameDatas(datas, gameCrossAndCicle.getList2DState())
-        print("Game datas has been saved")
 if __name__ == '__main__':
     main()
 

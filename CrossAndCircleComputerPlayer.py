@@ -1,5 +1,7 @@
 from CrossAndCircle import *
+from InputMethods import inputPosition
 import random
+import sys
 
 class CrossAndCircleComputerPlayer (CrossAndCircle):
     def move(self, charac):
@@ -8,24 +10,32 @@ class CrossAndCircleComputerPlayer (CrossAndCircle):
         else:
             self.moveO()
 
+
+    def doIQuitGame(self, end):
+        if (end == "q"):
+            print("Goodbye!")
+            sys.exit()
+
     def moveX(self):
         self.newInputPosition = []
-        print("Player 'X': Input your position", end=": ")
 
-        self.getInputPositionAndCheckIsOccupied()
+        while True:
+            position = inputPosition(self.level, 'X')
+            self.doIQuitGame(position)
+            if not self.isPositionOccupied(position):
+                break
         self.list2DState[self.newInputPosition[1]][self.newInputPosition[0]] = 'X'
         self.listPositionsOccupied.append(self.newInputPosition)
-        PrintBoard(self.list2DState)
+        self.printBoard()
         self.doEndGame('X')
 
     def moveO(self):
         self.newRandPosition = []
-        print("Player 'O': Computer position", end=": ")
 
         self.getRandomPositionAndCheckIsOccupied()
         self.list2DState[self.newRandPosition[1]][self.newRandPosition[0]] = 'O'
         self.listPositionsOccupied.append(self.newRandPosition)
-        PrintBoard(self.list2DState)
+        self.printBoard()
         self.doEndGame('O')
 
     def randPosition(self):
@@ -35,12 +45,30 @@ class CrossAndCircleComputerPlayer (CrossAndCircle):
         return positionX, positionY
 
     def getRandomPositionAndCheckIsOccupied(self):
+        print("Player 'O': Computer position", end=": ")
+
         while True:
             self.newRandPosition = self.randPosition()
-            print(self.newRandPosition)
-            print(self.getList2DState())
-            print(chr(self.newRandPosition[0]+97) + "" + str(self.newRandPosition[1]))
             if self.newRandPosition in self.listPositionsOccupied:
                 print("This position is engaged, Try again:", end=" ")
             else:
                 break
+
+    def doNobodyWin(self):
+        listLength = len(self.listPositionsOccupied)
+        endLength = self.level * self.level
+        if listLength == endLength:
+            print("Sorry, nobody win this game :(")
+            sys.exit()
+
+    def endGame(self, charach):
+        end = "End of the game. Player '" + charach + "' won"
+        self.msgEnd = end
+        print(self.msgEnd)
+        sys.exit()
+
+    def doEndGame(self, charach):
+        if self.checkBoard(charach):
+            self.endGame(charach)
+
+        self.doNobodyWin()

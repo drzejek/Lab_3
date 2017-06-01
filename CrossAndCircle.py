@@ -1,9 +1,6 @@
 #!/usr/bin/env python3.4
 
 from PrintBorad import PrintBoard
-from Exceptions import *
-import string
-import sys
 
 class CrossAndCircle:
     def __init__(self, gameDatas):
@@ -14,7 +11,10 @@ class CrossAndCircle:
         self.listPositionsOccupied = []
         self.setListPositionsOccupied()
         self.countNumber = 0
-        PrintBoard(self.list2DState)
+        self.board = PrintBoard(self.list2DState)
+        self.strBoard = self.board.getStringBoard(self.list2DState)
+        self.strMsg = str(self.level)
+
 
     #GETTERS
     def getLevel(self):
@@ -32,50 +32,6 @@ class CrossAndCircle:
             for yPos in range(self.level):
                 if self.list2DState[xPos][yPos] != ' ':
                     self.listPositionsOccupied.append((yPos, xPos))
-        print(self.listPositionsOccupied)
-
-    #INPUT CHECKERS
-    def doQuitGame(self, position):
-        if position == 'q':
-            print("Goodbye!")
-            sys.exit()
-
-    def isInputLengthCorrect(self, position):
-        if len(position) != 2:
-            raise WrongStringLength
-
-    def isInputSyntaxCorrect(self, position):
-        if not position[0] in string.ascii_lowercase:
-            raise NotString
-
-    def convertInputPositionToIntList (self, position):
-        positionX, positionY = position
-        positionX = ord(positionX) - 97
-        positionY = int(positionY)
-        return positionX, positionY
-
-    #INPUT POSITION
-    def getInputPosition(self):
-        while True:
-            try:
-                position = input()
-                self.doQuitGame(position)
-                self.isInputLengthCorrect(position)
-                self.isInputSyntaxCorrect(position)
-                positionX, positionY = self.convertInputPositionToIntList(position)
-
-                if 0 <= positionX < self.level and 0 <= positionY < self.level:
-                    return positionX, positionY
-                else:
-                    raise WrongPositionInput
-
-            except NotString:
-                print("Sorry, first character is not string. Try again:", end=" ")
-            except WrongPositionInput:
-                print("Sorry, You type wrong position:", end=" ")
-                continue
-            except WrongStringLength:
-                print("Sorry, Your String has wrong length. Try again:", end=" ")
 
     #CHECKERS
     def checkBoard(self, charach):
@@ -118,31 +74,29 @@ class CrossAndCircle:
 
         return False
 
-    def doNobodyWin(self):
-        listLength = len(self.listPositionsOccupied)
-        endLength = self.level*self.level
-        if listLength == endLength:
-            print("Sorry, nobody win this game :(")
-            sys.exit()
-        return False
+    def isPositionOccupied(self, position):
+        self.newInputPosition = position
 
-    def endGame(self,charach):
-        print("End of the game. Player '" + charach + "' won")
-        sys.exit()
+        if self.newInputPosition in self.listPositionsOccupied:
+            print("This position is engaged, Try again\n")
+            return True
+        else:
+            return False
 
-    def doEndGame(self, charach):
-        if self.checkBoard(charach):
-            self.endGame(charach)
+    def addCharacterAndPositionToLists(self, charac):
+        self.list2DState[self.newInputPosition[1]][self.newInputPosition[0]] = charac
+        self.listPositionsOccupied.append(self.newInputPosition)
 
-        self.doNobodyWin()
+    def printBoard(self):
+        self.strBoard = self.board.getStringBoard(self.list2DState)
+        print("\n" + self.strBoard)
 
-    def getInputPositionAndCheckIsOccupied(self):
-        while True:
-            self.newInputPosition = self.getInputPosition()
-            if self.newInputPosition in self.listPositionsOccupied:
-                print("This position is engaged, Try again:", end=" ")
-            else:
-                break
+    def convertStrToTuple(self, str):
+        return int(str[1]), int(str[4])
 
     def move(self, charac):
         pass
+
+    def infoMessage(self):
+        print("Please type your position (a-" + chr(ord('a') + self.level - 1) + ")(0-"
+              + str(self.level - 1) + "). For example a2, b1")

@@ -6,6 +6,7 @@ class GameDatas:
         self.players = players
         self.states = []
         self.occupied = []
+
         if states is None:
             for row in range(level): self.states += [[' '] * level]
         else:
