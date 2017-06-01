@@ -7,5 +7,10 @@ If you want start client, go to client folder.
 [![Build Status](https://travis-ci.org/drzejek/Lab_3.svg?branch=master)](https://travis-ci.org/drzejek/Lab_3)
 
 # Run
+Server
 ```shell
 $ python3.4 Main.py
+```
+Client
+```shell
+$ python3.4 CrossAndCircleClient.py
