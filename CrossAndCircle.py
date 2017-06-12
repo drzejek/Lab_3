@@ -100,3 +100,5 @@ class CrossAndCircle:
     def infoMessage(self):
         print("Please type your position (a-" + chr(ord('a') + self.level - 1) + ")(0-"
               + str(self.level - 1) + "). For example a2, b1")
+        print("To end game press 'q'")
+        print("Game is being saved automaticly, every 2 moves (Cross and Circle)")
