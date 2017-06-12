@@ -1,8 +1,9 @@
 #!/usr/bin/env python3.4
 
 from PrintBorad import PrintBoard
+from AbstractCrossAndCircle import *
 
-class CrossAndCircle:
+class CrossAndCircle(AbstracCrossAndCircle):
     def __init__(self, gameDatas):
         self.level = gameDatas.getLevel()
         self.endNumber = 3

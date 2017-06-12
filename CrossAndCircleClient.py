@@ -19,8 +19,8 @@ class MyEchoClient:
         lvl = self.sock.recv(self.data_size)
         self.level = int(decodeString(lvl))
 
-    def doIQuitGame(self, end):
-        if (end == "q"):
+    def doIQuitGame(self, msg):
+        if (msg == "q"):
             print("Goodbye!")
             self.sock.send(encodeString("Quit"))
             sys.exit()
